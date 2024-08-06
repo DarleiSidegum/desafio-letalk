@@ -80,7 +80,8 @@ export class LoanRepository implements ILoanRepository {
     findMany(filter: FilterLoan): Promise<IPaginator<LoanModel>> {
         try {
             let queryBuilder =
-                this.loanEntityRepository.createQueryBuilder('loan');
+                this.loanEntityRepository.createQueryBuilder('loan')
+                .leftJoinAndSelect('loan.installments', 'installments');
             let pageFilter = 1,
                 limitFilter: FilterLimit = 10;
             if (filter) {
