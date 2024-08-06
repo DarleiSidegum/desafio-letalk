@@ -2,9 +2,9 @@ import { LoanModel } from "./loan";
 
 export class InstallmentModel {
     installment_id: number;
-    outstanding_balance: number;
+    remaining_balance: number;
     interest: number;
-    adjusted_outstanding_balance: number;
+    adjusted_remaining_balance: number;
     anount: number;
     due_date: number;
     loan_id: number;

@@ -1,15 +1,21 @@
 import { useState } from "react";
-import { LoanForm } from "./components/steps/loan-form";
+import { FormSchema, LoanForm } from "./components/steps/loan-form";
 import { LoanPreview } from "./components/steps/loan-preview";
 import { useToast } from "./components/ui/use-toast";
 import { Toaster } from "./components/ui/toaster";
 
 export function App() {
   const [currentStep, setStep] = useState<string>('loan-form');
+  const [formValue, setFormValue] = useState<FormSchema>({} as FormSchema);
   const { toast } = useToast()
 
   function handleRestartLoan() {
     setStep('loan-form');
+  }
+
+  function handleFormSubmitted(data: FormSchema) {
+    setFormValue(data);
+    setStep('loan-preview');
   }
 
   function handleSentLoan() {
@@ -25,9 +31,9 @@ export function App() {
       <h1 className="text-4xl font-light text-center text-gray-400">Simule e solicite seu empréstimo.</h1>
       <>
         {currentStep === 'loan-form' ? (
-          <LoanForm onLoanFormSubmitted={() => setStep('loan-preview')} />
+          <LoanForm onLoanFormSubmitted={(data) => handleFormSubmitted(data)} />
         ) : (
-          <LoanPreview onLoanRestarted={handleRestartLoan} onLoanSent={handleSentLoan}/>
+          <LoanPreview formValue={formValue} onLoanRestarted={handleRestartLoan} onLoanSent={handleSentLoan}/>
         )}
       </>
       <Toaster />

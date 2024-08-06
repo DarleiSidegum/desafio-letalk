@@ -19,6 +19,15 @@ export class CreateLoan {
 
         Object.assign(loan, request);
 
+        if(loan.installments && loan.installments.length) {
+            loan.installments = loan.installments.map( e => {
+                if(!e.installment_id) {
+                    delete e.installment_id;
+                }
+                return e;
+            });
+        }
+
         const created_loan = await this.loanRepository.create(loan);
 
         return { loan: created_loan };

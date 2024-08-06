@@ -16,13 +16,13 @@ export class InstallmentEntity {
     installment_id: number;
 
     @Column({type: 'decimal', precision: 20, scale: 2})
-    outstanding_balance: number;
+    remaining_balance: number;
 
     @Column({type: 'decimal', precision: 20, scale: 2})
     interest: number;
 
     @Column({type: 'decimal', precision: 20, scale: 2})
-    adjusted_outstanding_balance: number;
+    adjusted_remaining_balance: number;
 
     @Column({type: 'decimal', precision: 20, scale: 2})
     anount: number;
@@ -33,7 +33,7 @@ export class InstallmentEntity {
     @Column()
     loan_id: number;
 
-    @ManyToOne((type) => LoanEntity, (loan) => loan)
+    @ManyToOne((type) => LoanEntity, (loan) => loan.installments)
     @JoinColumn({ name: 'loan_id' })
     loan: LoanEntity;
 

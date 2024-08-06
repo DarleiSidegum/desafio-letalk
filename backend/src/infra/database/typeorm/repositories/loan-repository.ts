@@ -18,8 +18,10 @@ export class LoanRepository implements ILoanRepository {
 
     async create(loan: LoanModel): Promise<LoanModel> {
         try {
+            const loanCreate = await this.loanEntityRepository.create(loan);
+
             return await this.loanEntityRepository
-                .save(loan)
+                .save(loanCreate)
                 .then(async (loanSaved) => {
                     const loanUpdated = await this.findOne({
                         loan_id: loanSaved.loan_id,

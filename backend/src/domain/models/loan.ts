@@ -4,7 +4,7 @@ export class LoanModel {
     loan_id: number;
     cpf: string;
     uf: string;
-    date_birth: Date;
+    date_birth: string;
     loan_amount: number;
     monthly_amount: number;
     total_months: number;

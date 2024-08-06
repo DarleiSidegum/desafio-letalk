@@ -12,7 +12,7 @@ export class CreateLoanBody {
     uf: string;
 
     @IsNotEmpty()
-    date_birth: Date;
+    date_birth: string;
 
     @IsNotEmpty()
     loan_amount: number;

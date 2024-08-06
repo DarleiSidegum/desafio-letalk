@@ -12,7 +12,7 @@ export class UpdateLoanBody {
     uf: string;
 
     @IsOptional()
-    date_birth: Date;
+    date_birth: string;
 
     @IsOptional()
     loan_amount: number;

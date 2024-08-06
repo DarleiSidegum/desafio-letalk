@@ -21,7 +21,7 @@ export class LoanEntity {
     uf: string;
 
     @Column()
-    date_birth: Date;
+    date_birth: string;
 
     @Column({type: 'decimal', precision: 20, scale: 2})
     loan_amount: number;
@@ -42,9 +42,9 @@ export class LoanEntity {
     total_amount_payable: number;
 
     @OneToMany(
-        (type) => InstallmentEntity,
-        (installment) => installment.installment_id,
-        { cascade: true }
+        () => InstallmentEntity,
+        (installment) => installment.loan,
+        {orphanedRowAction: 'soft-delete', cascade: true, eager: true},
     )
     installments: InstallmentEntity[];
 
