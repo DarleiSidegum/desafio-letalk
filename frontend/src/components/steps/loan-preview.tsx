@@ -4,6 +4,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from ".
 import { FormSchema } from "./loan-form";
 import { useEffect, useState } from "react";
 import { api } from "@/lib/api";
+import { formatMoney } from "@/lib/utils";
 
 interface LoanFormProps{
   onLoanRestarted: () => void;
@@ -106,15 +107,6 @@ export function LoanPreview({
       });
   }
 
-  const moneyFormat = (value: number) => {
-    const formatter = new Intl.NumberFormat('pt-BR', {
-      style: 'currency',
-      currency: 'BRL',
-    });
-  
-    return <span>{formatter.format(value)}</span>;
-  };
-
   return (
     <div className="p-6 max-w-4xl mx-auto">
       <Button
@@ -128,30 +120,30 @@ export function LoanPreview({
       </Button>
       <h1 className="text-md font-semibold text-center mb-4">Veja a simulação para o seu empréstimo antes de efetivar</h1>
       <div className="bg-white shadow-sm rounded-sm w-full p-6 space-y-12">
-        <div className="grid grid-cols-3 gap-x-6 gap-y-16">
-          <div className="col-span-1 flex flex-col">
+        <div className="grid grid-cols-3 gap-x-6 gap-y-4 sm:gap-y-16">
+          <div className="col-span-3 sm:col-span-1 flex flex-col">
             <span className="text-xs font-medium text-gray-500">VALOR REQUERIDO:</span>
-            <span className="text-base font-medium ">{moneyFormat(formValue.loan_amount)}</span>
+            <span className="text-base font-medium ">{formatMoney(formValue.loan_amount)}</span>
           </div>
-          <div className="col-span-1 flex flex-col">
+          <div className="col-span-3 sm:col-span-1 flex flex-col">
             <span className="text-xs font-medium text-gray-500">TAXA DE JUROS:</span>
             <span className="text-base font-medium ">{roundNumber(rate_per_state[formValue.uf] * 100)}% ao mês</span>
           </div>
-          <div className="col-span-1 flex flex-col">
+          <div className="col-span-3 sm:col-span-1 flex flex-col">
             <span className="text-xs font-medium text-gray-500">VALOR QUE DESEJA PAGAR POR MÊS:</span>
-            <span className="text-base font-medium ">{moneyFormat(formValue.monthly_amount)}</span>
+            <span className="text-base font-medium ">{formatMoney(formValue.monthly_amount)}</span>
           </div>
-          <div className="col-span-1 flex flex-col">
+          <div className="col-span-3 sm:col-span-1 flex flex-col">
             <span className="text-xs font-medium text-gray-500">TOTAL DE MESES PARA QUITAR:</span>
             <span className="text-base font-medium ">{installments.length} MESES</span>
           </div>
-          <div className="col-span-1 flex flex-col">
+          <div className="col-span-3 sm:col-span-1 flex flex-col">
             <span className="text-xs font-medium text-gray-500">TOTAL DE JUROS:</span>
-            <span className="text-base font-medium ">{moneyFormat(totalInterest)}</span>
+            <span className="text-base font-medium ">{formatMoney(totalInterest)}</span>
           </div>
-          <div className="col-span-1 flex flex-col">
+          <div className="col-span-3 sm:col-span-1 flex flex-col">
             <span className="text-xs font-medium text-gray-500">TOTAL A PAGAR:</span>
-            <span className="text-base font-medium ">{moneyFormat(formValue.loan_amount + totalInterest)}</span>
+            <span className="text-base font-medium ">{formatMoney(formValue.loan_amount + totalInterest)}</span>
           </div>
         </div>
         <div>
@@ -159,22 +151,22 @@ export function LoanPreview({
           <Table>
             <TableHeader className="border-b">
               <TableRow>
-                <TableHead className="pl-0">SALDO DEVEDOR</TableHead>
-                <TableHead>JUROS</TableHead>
-                <TableHead>SALDO DEVEDOR AJUSTADO</TableHead>
-                <TableHead>VALOR DA PARCELA</TableHead>
-                <TableHead className="pr-0">VENCIMENTO</TableHead>
+                <TableHead className="pl-0 whitespace-nowrap">SALDO DEVEDOR</TableHead>
+                <TableHead className="whitespace-nowrap">JUROS</TableHead>
+                <TableHead className="whitespace-nowrap">SALDO DEVEDOR AJUSTADO</TableHead>
+                <TableHead className="whitespace-nowrap">VALOR DA PARCELA</TableHead>
+                <TableHead className="pr-0 whitespace-nowrap">VENCIMENTO</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {installments.map((task, i) => {
                 return (
                   <TableRow key={i}>
-                    <TableCell className="pl-0">{moneyFormat(task.remaining_balance)}</TableCell>
-                    <TableCell>{moneyFormat(task.interest)}</TableCell>
-                    <TableCell>{moneyFormat(task.adjusted_remaining_balance)}</TableCell>
-                    <TableCell>{moneyFormat(task.anount)}</TableCell>
-                    <TableCell className="pr-0">{task.due_date.toLocaleDateString("pt-BR")}</TableCell>
+                    <TableCell className="pl-0 whitespace-nowrap">{formatMoney(task.remaining_balance)}</TableCell>
+                    <TableCell className="whitespace-nowrap">{formatMoney(task.interest)}</TableCell>
+                    <TableCell className="whitespace-nowrap">{formatMoney(task.adjusted_remaining_balance)}</TableCell>
+                    <TableCell className="whitespace-nowrap">{formatMoney(task.anount)}</TableCell>
+                    <TableCell className="pr-0 whitespace-nowrap">{task.due_date.toLocaleDateString("pt-BR")}</TableCell>
                   </TableRow>
                 )
               })}
