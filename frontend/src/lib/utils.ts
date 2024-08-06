@@ -46,7 +46,7 @@ export const formatMoney = (value: string | number) => {
     const cleanedValue = value.replace(/\D/g, '');
     numericValue = parseFloat(cleanedValue) / 100;
   }else{
-    numericValue = value / 100;
+    numericValue = value;
   }
 
   return new Intl.NumberFormat('pt-BR', {
