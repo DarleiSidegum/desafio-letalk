@@ -27,8 +27,8 @@ export class InstallmentEntity {
     @Column({type: 'decimal', precision: 20, scale: 2})
     anount: number;
 
-    @Column({type: 'decimal', precision: 20, scale: 2})
-    due_date: number;
+    @Column()
+    due_date: Date;
 
     @Column()
     loan_id: number;
