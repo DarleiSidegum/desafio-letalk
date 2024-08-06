@@ -3,13 +3,6 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { useEffect, useState } from "react";
 import { api } from "@/lib/api";
 import { formatCpf, formatMoney } from "@/lib/utils";
-import { FormSchema } from "@/components/steps/loan-form";
-
-interface LoanFormProps{
-  onLoanRestarted: () => void;
-  onLoanSent: () => void;
-  formValue: FormSchema
-}
 
 interface Installment {
   due_date: Date;        
